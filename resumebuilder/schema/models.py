@@ -22,7 +22,7 @@ class Typography(BaseModel):
     body_font: str = "Times New Roman"
     body_size: str = "9.5pt"
     name_font: str = "Times New Roman"
-    name_size: str = "24pt"
+    name_size: str = "18pt"
     name_bold: bool = True
     headline_font: str = "Times New Roman"
     headline_size: str = "9.5pt"
