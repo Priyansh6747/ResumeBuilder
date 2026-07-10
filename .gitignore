@@ -10,3 +10,13 @@ wheels/
 .venv
 .idea
 .commandcode
+
+# RenderCV / Typst output
+rendercv_output/
+*.typ
+!*/templates/**/*.typ
+*.pdf
+!rendercv/examples/*.pdf
+
+# Legacy artifacts
+sample_content.json

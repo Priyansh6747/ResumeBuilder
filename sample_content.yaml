@@ -1,0 +1,78 @@
+cv:
+  name: Priyansh Singh
+  headline: DevOps & Full Stack Engineer Intern | B.Tech CSE 2027, JIIT Noida
+  email: pstanwar6747@gmail.com
+  phone: "+91-8107173094"
+  social_networks:
+    - network: LinkedIn
+      username: priyanshsingh6747
+    - network: GitHub
+      username: Priyansh6747
+
+education:
+  - institution: Jaypee Institute of Information Technology (JIIT)
+    area: Computer Science and Engineering
+    degree: B.Tech
+    start_date: "2023"
+    end_date: "2027"
+
+experience:
+  - company: US-Based Startup (Remote)
+    position: Freelance Full-Stack Developer
+    start_date: Nov 2025
+    end_date: present
+    highlights:
+      - "Engineered microservices backend for a Next.js SaaS platform; integrated Stripe payments and Mux video streaming with secure API design"
+      - "Implemented distributed background job processing for long-running tasks, reducing platform response latency and improving throughput"
+      - "Optimised API performance via async execution patterns and architecture refactoring; managed deployments on Linux VPS with Nginx reverse proxy"
+
+  - company: Linux Server Administration
+    position: Personal VPS — sovereignlab.cloud
+    start_date: Ongoing
+    end_date: present
+    highlights:
+      - "Self-host and manage a production VPS running Pop!_OS (Ubuntu-based); configure Nginx reverse proxies, systemd services, SSL/TLS certificates, and SSH key-based authentication"
+      - "Deployed and configured Ollama + Open WebUI behind Nginx; managed environment setup, apt package management, and Unix application configuration end-to-end"
+      - "Practiced incremental backup strategies and log monitoring for hosted services; experience with firewall rules, port management, and network security fundamentals"
+      - "Comfortable writing Bash scripts for automation, cron scheduling, and system maintenance"
+
+projects:
+  - name: CareNest
+    start_date: May 2025
+    end_date: Oct 2025
+    summary: Maternal & child healthcare platform with RAG system
+    highlights:
+      - "Built full-stack maternal & child healthcare platform; engineered memory-centric RAG system with LangChain + FAISS and 2-layer caching, cutting inference latency ~40%"
+      - "Containerised FastAPI backend with Docker; managed multi-service deployment with environment variable injection and health-check endpoints"
+      - "Architected REST APIs with async execution patterns; PostgreSQL schema design with relational data modelling across users, sessions, and cached embeddings"
+
+  - name: Nutrilio
+    start_date: Oct 2025
+    end_date: Dec 2025
+    summary: AI-driven nutrition platform with multi-modal input
+    highlights:
+      - "Developed AI-driven nutrition platform with multi-modal input (image, text, voice) and real-time nutrient analysis; integrated RAG conversational assistant grounded in WHO/ICMR guidelines"
+      - "Managed CI-style local build pipeline; structured project with environment-specific config and modular service separation for clean deployability"
+
+  - name: Path Visualizer
+    start_date: Mar 2025
+    end_date: Mar 2025
+    summary: High-performance pathfinding visualizer built in Rust + WASM
+    highlights:
+      - "Built high-performance pathfinding visualizer with 6 algorithms (A*, Bellman-Ford, BFS, DFS, Greedy BFS, Bidirectional Swarm); achieved 2-5x speedup over JS-only via Rust-Wasm with shared memory buffers"
+      - "Reduced JS-Wasm bridge calls by 90% through batched memory access, demonstrating systems-level performance optimization"
+
+skills:
+  - label: Languages
+    details: Rust, C++, Python, JavaScript, TypeScript, SQL, HTML/CSS, Bash/Shell
+  - label: DevOps & Infra
+    details: Docker, Linux (Pop!_OS / Ubuntu), VPS Management, Nginx, systemd, SSH/TLS, Bash scripting, Cron, AWS (studying), Jenkins CI/CD (studying), Kubernetes (conceptual)
+  - label: Backend & APIs
+    details: FastAPI, Node.js, Next.js, Axum (Rust), REST API design, Microservices, Async patterns
+  - label: Databases
+    details: PostgreSQL, MongoDB, Firebase, SQLite (WAL mode), pgvector, Neo4j
+
+achievements:
+  - bullet: "Top 3 Nationally — AI x MedTech Startup Hackathon & Cohort 2025; presented CareNest at AI & Health Innovation Conference by IndiaAI to government officials and healthcare leaders"
+  - bullet: "Published open-source Rust library gemini-light-rs on crates.io — 750+ downloads"
+  - bullet: "Finalist at HackLoop; 5th place at Project-a-thon by ReelCode & Asymp Corporation"
