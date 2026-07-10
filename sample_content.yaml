@@ -76,3 +76,48 @@ achievements:
   - bullet: "Top 3 Nationally — AI x MedTech Startup Hackathon & Cohort 2025; presented CareNest at AI & Health Innovation Conference by IndiaAI to government officials and healthcare leaders"
   - bullet: "Published open-source Rust library gemini-light-rs on crates.io — 750+ downloads"
   - bullet: "Finalist at HackLoop; 5th place at Project-a-thon by ReelCode & Asymp Corporation"
+
+# ── Design (optional — these are the defaults) ──────────────────────
+design:
+  page:
+    size: us-letter
+    top_margin: 0.5in
+    bottom_margin: 0.5in
+    left_margin: 0.6in
+    right_margin: 0.6in
+  typography:
+    body_font: Times New Roman
+    body_size: 9.5pt
+    name_font: Times New Roman
+    name_size: 22pt
+    name_bold: true
+    headline_font: Times New Roman
+    headline_size: 9.5pt
+    connections_font: Times New Roman
+    connections_size: 9.5pt
+    section_title_font: Times New Roman
+    section_title_size: 10.5pt
+    section_title_bold: true
+    section_title_tracking: 0.8pt
+    line_spacing: 0.6em
+    justify_body: true
+  header:
+    connections_separator: "  |  "
+    connections_spacing: 0.5cm
+    space_below_name: 0.3cm
+    space_below_headline: 0.15cm
+    space_below_connections: 0.35cm
+  section_titles:
+    type: with-full-line
+    line_thickness: 0.6pt
+    space_above: 0.3cm
+    space_below: 0.1cm
+  entries:
+    date_column_width: 4.15cm
+    column_gap: 0.1cm
+    space_between_entries: 0.2cm
+    bullet_char: "•"
+    bullet_indent: 0.35cm
+    bullet_text_gap: 0.5em
+    degree_column_width: 1cm
+    summary_space_above: 0.1cm

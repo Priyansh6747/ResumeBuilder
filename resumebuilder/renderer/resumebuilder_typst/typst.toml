@@ -1,0 +1,6 @@
+[package]
+name = "resumebuilder"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["ResumeBuilder"]
+description = "Self-contained Typst layout helpers for one-page resumes"

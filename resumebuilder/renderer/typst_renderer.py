@@ -1,109 +1,104 @@
-"""Typst source generator — user content via #raw blocks to avoid parser bugs."""
+"""Jinja2-based Typst template renderer."""
+
 import copy
+import functools
+import pathlib
 import re
 
+from jinja2 import Environment, FileSystemLoader
 
-def _date_str(entry: dict) -> str:
-    if entry.get("date"):
-        return entry["date"]
-    if entry.get("start_date") and entry.get("end_date"):
-        return f"{entry['start_date']} – {entry['end_date']}"
-    if entry.get("start_date"):
-        return entry["start_date"]
-    return ""
+TEMPLATES_DIR = pathlib.Path(__file__).parent / "templates" / "typst"
+
+SECTION_KEYS = {"education", "experience", "projects", "skills", "achievements"}
+
+
+@functools.lru_cache(maxsize=1)
+def _env() -> Environment:
+    return Environment(
+        loader=FileSystemLoader(str(TEMPLATES_DIR)),
+        trim_blocks=True,
+        lstrip_blocks=True,
+        keep_trailing_newline=True,
+    )
+
+
+def _render(name: str, **kwargs) -> str:
+    return _env().get_template(name).render(**kwargs)
 
 
 def _esc(s: str) -> str:
-    """Escape special chars that Typst 0.15 can't parse even in code-mode #text[]. """
-    s = re.sub(r'([^a-zA-Z])_([a-zA-Z])', r'\1\2', s)
-    # Typst: @ resolves to label, % starts comment, * is strong emphasis
-    return s.replace("@", "\\@").replace("%", "\\%").replace("*", "\\*")
+    """Escape characters that break Typst 0.15 parser in content."""
+    # _ after non-letter triggers unclosed delimiter
+    s = re.sub(r"([^a-zA-Z])_([a-zA-Z])", r"\1\2", s)
+    # @ and % trigger label resolution and comments
+    s = s.replace("@", "\\@").replace("%", "\\%")
+    # * anywhere inside #text[] content triggers strong-emphasis parsing bugs
+    s = s.replace("*", "\u2217")
+    return s.replace("*", "\\*")
+
+
+def _escape_recursive(obj):
+    if isinstance(obj, str):
+        return _esc(obj)
+    if isinstance(obj, dict):
+        return {k: _escape_recursive(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_escape_recursive(x) for x in obj]
+    return obj
+
+
+def _date_str(e: dict) -> str:
+    if e.get("date"):
+        return e["date"]
+    s = e.get("start_date", "")
+    e2 = e.get("end_date", "")
+    if s and e2:
+        return f"{s} – {e2}"
+    return s or ""
 
 
 def generate_typst(data: dict) -> str:
-    data = copy.deepcopy(data)
-    lines = []
-    w = lines.append
-
-    w(
-        '#set page(paper: "us-letter", margin: '
-        "(top: 0.50in, bottom: 0.50in, left: 0.60in, right: 0.60in))"
-    )
-    w('#set text(font: "Times New Roman", size: 9.5pt)')
-    w("")
+    data = _escape_recursive(copy.deepcopy(data))
+    design = data.get("design", {})
 
     cv = data["cv"]
-    w(f'#text(size: 22pt, weight: "bold")[{_esc(cv["name"])}]')
-    if cv.get("headline"):
-        w(f'#text(size: 9.5pt)[{_esc(cv["headline"])}]')
-    contacts = []
+    connections = []
     if cv.get("email"):
-        contacts.append(_esc(cv["email"]))
+        connections.append(cv["email"])
     if cv.get("phone"):
-        contacts.append(cv["phone"])
+        connections.append(cv["phone"])
+    if cv.get("location"):
+        connections.append(cv["location"])
     for sn in (cv.get("social_networks") or []):
-        contacts.append(f"{sn['network']}: {sn['username']}")
-    if contacts:
-        w(f'#text(size: 9.5pt)[{"  |  ".join(contacts)}]')
+        connections.append(f"{sn['network']}: {sn['username']}")
+    cv["_connections"] = connections
 
-    def section_header(title):
-        w("")
-        w("#v(0.30cm)")
-        w(f'#text(size: 10.5pt, weight: "bold", tracking: 0.8pt)[{title.upper()}]')
-        w("#v(0.06cm)")
-        w('#line(stroke: 0.6pt, length: 100%)')
-        w("#v(0.10cm)")
+    preamble = _render("Preamble.j2.typ", design=design)
+    header = _render("Header.j2.typ", cv=cv, design=design)
+    parts = [preamble, header]
 
-    for key, title in [("education", "Education"), ("experience", "Experience"),
-                        ("projects", "Projects"), ("skills", "Skills"),
-                        ("achievements", "Achievements")]:
-        items = data.get(key, [])
-        if not items:
+    titles = {"education": "Education", "experience": "Experience",
+              "projects": "Projects", "skills": "Skills",
+              "achievements": "Achievements"}
+
+    template_names = {
+        "education": "entries/EducationEntry.j2.typ",
+        "experience": "entries/ExperienceEntry.j2.typ",
+        "projects": "entries/NormalEntry.j2.typ",
+        "skills": "entries/OneLineEntry.j2.typ",
+        "achievements": "entries/BulletEntry.j2.typ",
+    }
+
+    for key, title in titles.items():
+        entries = data.get(key, [])
+        if not entries:
             continue
-        section_header(title)
+        parts.append(_render("SectionBeginning.j2.typ",
+                              section_title=title, design=design))
+        tmpl = template_names[key]
+        for e in entries:
+            e["date"] = _date_str(e)
+            parts.append(_render(tmpl, entry=e, design=design))
+        parts.append(_render("SectionEnding.j2.typ"))
 
-        for e in items:
-            date = _date_str(e)
-
-            if key == "education":
-                w(f'#text(weight: "bold")[{_esc(e["institution"])}]')
-                extra = _esc(e.get("area", ""))
-                if e.get("degree"):
-                    extra += f"  |  Degree: {e['degree']}"
-                if date:
-                    extra += f"  |  {date}"
-                w(f'#text(size: 9.5pt)[{extra}]')
-                for h in (e.get("highlights") or []):
-                    w(f'#text(size: 9.5pt)[  \u2022  {_esc(h)}]')
-                w("#v(0.15cm)")
-
-            elif key == "experience":
-                w(
-                    f'#text(weight: "bold", size: 10pt)[{_esc(e["company"])}]'
-                    f'  #text(style: "italic", size: 9.5pt)[{_esc(e["position"])}]'
-                    f'  #text(size: 10pt)[{date}]'
-                )
-                if e.get("summary"):
-                    w(f'#text(size: 9.5pt)[{_esc(e["summary"])}]')
-                for h in (e.get("highlights") or []):
-                    w(f'#text(size: 9.5pt)[  \u2022  {_esc(h)}]')
-                w("#v(0.15cm)")
-
-            elif key == "projects":
-                w(
-                    f'#text(weight: "bold", size: 10pt)[{_esc(e["name"])}]'
-                    f'  #text(size: 10pt)[{date}]'
-                )
-                if e.get("summary"):
-                    w(f'#text(size: 9.5pt)[{_esc(e["summary"])}]')
-                for h in (e.get("highlights") or []):
-                    w(f'#text(size: 9.5pt)[  \u2022  {_esc(h)}]')
-                w("#v(0.15cm)")
-
-            elif key == "skills":
-                w(f'#text(weight: "bold")[{_esc(e["label"])}:]  #text[{_esc(e["details"])}]')
-
-            elif key == "achievements":
-                w(f'#text(size: 9.5pt)[  \u2022  {_esc(e["bullet"])}]')
-
-    return "\n".join(lines)
+    return "\n".join(parts)
