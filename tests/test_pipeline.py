@@ -60,7 +60,7 @@ class TestPipeline:
         src = generate_typst(model.model_dump())
         assert "#set page" in src
         assert "#set text" in src
-        assert "Test User" in src
+        assert "TEST USER" in src
         assert "Acme" in src
         assert "Built things" in src
         assert "Python" in src

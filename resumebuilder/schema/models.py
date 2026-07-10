@@ -20,35 +20,36 @@ class PageModel(BaseModel):
 
 class Typography(BaseModel):
     body_font: str = "Times New Roman"
-    body_size: str = "9.5pt"
+    body_size: str = "1.5pt"
     name_font: str = "Times New Roman"
-    name_size: str = "22pt"
+    name_size: str = "0.1pt"
     name_bold: bool = True
     headline_font: str = "Times New Roman"
-    headline_size: str = "9.5pt"
+    headline_size: str = "1.5pt"
     connections_font: str = "Times New Roman"
-    connections_size: str = "9.5pt"
+    connections_size: str = "0.9pt"
     section_title_font: str = "Times New Roman"
-    section_title_size: str = "10.5pt"
+    section_title_size: str = "1.5pt"
     section_title_bold: bool = True
     section_title_tracking: str = "0.8pt"
-    line_spacing: str = "0.6em"
+    line_spacing: str = "0.3em"
     justify_body: bool = True
 
 
 class HeaderDesign(BaseModel):
-    connections_separator: str = "  |  "
+    connections_separator: str = "  •  "
     connections_spacing: str = "0.5cm"
-    space_below_name: str = "0.3cm"
-    space_below_headline: str = "0.15cm"
-    space_below_connections: str = "0.35cm"
+    connections_color: str = "555"
+    space_below_name: str = "0cm"
+    space_below_headline: str = "0.10cm"
+    space_below_connections: str = "0.40cm"
 
 
 class SectionTitles(BaseModel):
     type: str = "with-full-line"
     line_thickness: str = "0.6pt"
-    space_above: str = "0.3cm"
-    space_below: str = "0.1cm"
+    space_above: str = "0.12cm"
+    space_below: str = "0.12cm"
 
 
 class EntriesDesign(BaseModel):
