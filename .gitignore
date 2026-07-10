@@ -13,8 +13,6 @@ wheels/
 
 # RenderCV / Typst output
 rendercv_output/
-*.typ
-!*/templates/**/*.typ
 *.pdf
 !rendercv/examples/*.pdf
 
