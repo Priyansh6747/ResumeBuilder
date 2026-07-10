@@ -1,0 +1,115 @@
+{
+  "has_photo": false,
+  "header": {
+    "name": "Jane Developer",
+    "phone": "555-1234",
+    "email": "jane@example.com",
+    "linkedin": "linkedin.com/in/jane",
+    "github": "github.com/jane",
+    "tagline": "Full-stack engineer with 5 years of experience building scalable systems"
+  },
+  "education": [
+    {
+      "institution": "University of Technology",
+      "location": "Boston, MA",
+      "degree": "BSc Computer Science",
+      "dates": "2016 – 2020"
+    }
+  ],
+  "experience": [
+    {
+      "title": "Senior Software Engineer",
+      "org": "TechCorp",
+      "dates": "2022 – Present",
+      "bullets": [
+        {
+          "text": "Led migration of monolithic API to microservices, reducing p99 latency by 60%",
+          "priority": 1
+        },
+        {
+          "text": "Designed and implemented a real-time event pipeline processing 1M+ events/day",
+          "priority": 1
+        },
+        {
+          "text": "Mentored 4 junior engineers through onboarding and code review",
+          "priority": 2
+        }
+      ]
+    },
+    {
+      "title": "Software Engineer",
+      "org": "StartupX",
+      "dates": "2020 – 2022",
+      "bullets": [
+        {
+          "text": "Built customer-facing dashboard used by 10K+ weekly active users",
+          "priority": 1
+        },
+        {
+          "text": "Optimised API performance via async execution and connection pooling, cutting average response time by 40%",
+          "priority": 2
+        },
+        {
+          "text": "Managed CI-style local build pipeline; structured and migrated test suite from 20% to 85% coverage",
+          "priority": 3
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "OpenRouter CLI",
+      "stack": "Rust, Tokio",
+      "dates": "2025",
+      "bullets": [
+        {
+          "text": "Multi-provider LLM router supporting 15+ backends with automatic failover",
+          "priority": 1
+        },
+        {
+          "text": "Streaming response processing with backpressure-aware async pipeline",
+          "priority": 2
+        }
+      ]
+    },
+    {
+      "name": "ResumeBuilder",
+      "stack": "Python, ReportLab",
+      "dates": "2025",
+      "bullets": [
+        {
+          "text": "One-page PDF rendering engine with deterministic font fallback ladder",
+          "priority": 1
+        },
+        {
+          "text": "Priority-driven bullet trimming that guarantees single-page output",
+          "priority": 2
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": "Python, Rust, TypeScript, Go, SQL"
+    },
+    {
+      "category": "Tools",
+      "items": "Docker, Kubernetes, Terraform, GitHub Actions"
+    }
+  ],
+  "achievements": [
+    {
+      "text": "Speaker at PyCon 2024: \"Type-Safe APIs with Pydantic v2\"",
+      "priority": 1
+    },
+    {
+      "text": "Open-source contributor to FastAPI with 3 merged PRs",
+      "priority": 2
+    },
+    {
+      "text": "Achieved Finalist status at HackLoop and 5th place at CodeFrenzy CTF",
+      "priority": 3
+    }
+  ]
+}

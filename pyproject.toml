@@ -1,7 +1,33 @@
 [project]
 name = "resumebuilder"
 version = "0.1.0"
-description = "Add your description here"
+description = "Pixel-perfect one-page resume PDF renderer with a deterministic fit/overflow engine"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "reportlab>=4.2",     # PDF canvas, Base14 fonts, stringWidth, page sizes
+    "Pillow>=10.4",      # Circular photo preprocessing (RGBA mask) before reportlab embedding
+    "pydantic>=2.9",     # Content schema validation with one-line-error contract
+    "pydantic-core>=2.23",  # Pin alongside pydantic for reproducible validation errors
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",        # Unit tests for fit engine, validation, wrapping
+    "pytest-cov>=5.0",   # Coverage on core modules
+    "ruff>=0.6",          # Lint + format
+]
+
+[project.scripts]
+resume-builder = "resumebuilder.cli:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

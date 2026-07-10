@@ -1,6 +1,5 @@
-def main():
-    print("Hello from resumebuilder!")
+"""ResumeBuilder — Pixel-perfect one-page resume PDF renderer."""
 
+from resumebuilder.pipeline import build_resume
 
-if __name__ == "__main__":
-    main()
+__all__ = ["build_resume"]
